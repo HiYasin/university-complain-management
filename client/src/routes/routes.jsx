@@ -1,20 +1,21 @@
-import App from "@/App"
 import AuthPage from "@/pages/AuthPage";
+import Dashboard from "@/pages/Dashboard";
 import Home from "@/pages/Home";
 import { createBrowserRouter } from "react-router"
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />,
+        element: <Home />,
     },
     {
         path: "/auth",
         element: <AuthPage />,
     },
     {
-        path: "/home",
-        element: <Home />,
+        path: "/dashboard",
+        element: <PrivateRoute><Dashboard /></PrivateRoute>,
     }
 ]);
 
