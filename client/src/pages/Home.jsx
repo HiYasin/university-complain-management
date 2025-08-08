@@ -129,7 +129,32 @@ export default function Home() {
         </div>
       </section>
 
-    
+      {/* FAQ Section */}
+      <section className="max-w-4xl mx-auto">
+        <h2 className="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="item-1">
+            <AccordionTrigger>How do I file a complaint?</AccordionTrigger>
+            <AccordionContent>
+              Login using your IIUC GSuite account, go to “Submit Complaint” and fill out the form.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger>Can I track my complaint status?</AccordionTrigger>
+            <AccordionContent>
+              Yes, you can view complaint status in your dashboard after logging in.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger>Will my complaint be anonymous?</AccordionTrigger>
+            <AccordionContent>
+              No, but details remain confidential and are only visible to authorities.
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </section>
+
+      
     </div>
   )
 }
