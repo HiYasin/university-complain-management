@@ -98,7 +98,38 @@ export default function Home() {
         </div>
       </section>
 
-      
+      {/* Stats */}
+      <section className="bg-primary text-primary-foreground rounded-lg py-12 px-6 grid md:grid-cols-3 gap-8 text-center">
+        {[
+          { number: "500+", label: "Complaints Resolved" },
+          { number: "95%", label: "Satisfaction Rate" },
+          { number: "1000+", label: "Active Users" },
+        ].map((stat) => (
+          <div key={stat.label}>
+            <div className="text-4xl font-extrabold">{stat.number}</div>
+            <p className="text-lg opacity-90">{stat.label}</p>
+          </div>
+        ))}
+      </section>
+
+      {/* Testimonials */}
+      <section className="text-center">
+        <h2 className="text-3xl font-bold mb-8">What Students Say</h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            { name: "Rahim", text: "This system made it so easy to file and track my complaint. Quick response!" },
+            { name: "Karim", text: "Very transparent process. No more confusion about complaint status." },
+            { name: "Ayesha", text: "I feel my issues are heard and taken seriously. Highly recommended!" },
+          ].map((t) => (
+            <div key={t.name} className="bg-muted p-6 rounded-lg shadow hover:shadow-md transition">
+              <p className="italic mb-4">"{t.text}"</p>
+              <div className="font-semibold">— {t.name}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+    
     </div>
   )
 }
