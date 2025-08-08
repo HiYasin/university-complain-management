@@ -1,3 +1,4 @@
+import { ModeToggle } from '@/components/ui/mode-toggle'
 import React from 'react'
 import { Link } from 'react-router'
 

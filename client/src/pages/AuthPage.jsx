@@ -5,6 +5,7 @@ import React, { useContext } from 'react'
 export default function AuthPage() {
 
     const { user, loginWithGoogle, logout } = useContext(AuthContext);
+    
     console.log(user);
 
 
