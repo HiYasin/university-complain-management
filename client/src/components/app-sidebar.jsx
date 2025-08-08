@@ -40,7 +40,7 @@ const adminSidebarData = {
 //eta amar user sidebar data
 const userSidebarData = {
   navMain: [
-    { title: "Dashboard", url: "/user", icon: SquareTerminal },
+    { title: "Dashboard", url: "/user/dashboard", icon: SquareTerminal },
     { title: "Quick Complain", url: "/user/quick-complain", icon: Send },
   ],
   projects: [],

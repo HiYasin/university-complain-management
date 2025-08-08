@@ -8,14 +8,14 @@ import {
 } from "@/components/ui/sidebar"
 import { ModeToggle } from "@/components/ui/mode-toggle"
 import AdminDashboard from "@/pages/admin/AdminDashboard"
-// import UserDashboard from "@/pages/user/UserDashboard"
+import UserDashboard from "@/pages/user/UserDashboard"
 
-export default function DashboardLayout({role = 'admin'} ) {
+export default function DashboardLayout({role = 'user'} ) {
  const location = useLocation()
   const currentPath = location.pathname
 
   const isAdmin = currentPath.startsWith("/admin")
-//   const isUser = currentPath.startsWith("/user")
+  const isUser = currentPath.startsWith("/user")
 
 
 
@@ -49,11 +49,11 @@ export default function DashboardLayout({role = 'admin'} ) {
               <Outlet />
             </AdminDashboard>
           )}
-          {/* {isUser && (
+          {isUser && (
             <UserDashboard>
               <Outlet />
             </UserDashboard>
-          )} */}
+          )}
         </main>
       </SidebarInset>
     </SidebarProvider>
