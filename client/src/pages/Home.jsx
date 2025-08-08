@@ -154,7 +154,17 @@ export default function Home() {
         </Accordion>
       </section>
 
-      
+      {/* CTA Section */}
+      <section className="text-center bg-muted py-12 rounded-lg">
+        <h2 className="text-3xl font-bold mb-4">Ready to Make Your Voice Heard?</h2>
+        <p className="text-lg text-muted-foreground mb-6">
+          Join IIUC Complaint Management System today and help improve our campus.
+        </p>
+        <Button size="lg" onClick={onSignup}>
+          Get Started Now
+        </Button>
+      </section>
+
     </div>
   )
 }

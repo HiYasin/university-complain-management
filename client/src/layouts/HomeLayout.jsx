@@ -1,3 +1,4 @@
+import Footer from '@/components/home/Footer'
 import Header from '@/components/home/Header'
 import React from 'react'
 import { Outlet } from 'react-router'
@@ -12,7 +13,7 @@ export default function HomeLayout() {
                 <Outlet />
             </main>
             <footer>
-                {/* add the footer here */}
+                <Footer />
             </footer>
         </div>
     )
