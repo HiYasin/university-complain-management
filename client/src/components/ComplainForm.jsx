@@ -14,12 +14,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 
+
+import { useContext } from "react";
+import { AuthContext } from "@/providers/AuthProvider";
+import { getMatricIdFromEmail } from "@/lib/utils";
+import { useCreateComplainMutation } from "@/redux/features/complainApi";
+
 export default function ComplainForm() {
+  const { user } = useContext(AuthContext);
+  const matricId = getMatricIdFromEmail(user?.email);
+  const [createComplain, { isLoading }] = useCreateComplainMutation();
   const [formData, setFormData] = useState({
-    title: "",
-    category: "",
+    subject: "",
     description: "",
-    file: null,
+    status: "pending",
   });
   const [isChecked, setIsChecked] = useState(false);
 
@@ -28,17 +36,27 @@ export default function ComplainForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (e) => {
-    setFormData((prev) => ({ ...prev, file: e.target.files[0] }));
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!matricId) {
+      toast.error("User not found. Please login.");
+      return;
+    }
+    try {
+      await createComplain({
+        userMatricId: matricId,
+        subject: formData.subject,
+        description: formData.description,
+        status: formData.status,
+      }).unwrap();
+      toast.success("Complaint submitted successfully!");
+      setFormData({ subject: "", description: "", status: "pending" });
+      setIsChecked(false);
+    } catch (error) {
+      toast.error(`Failed to submit complaint.${error?.status}`);
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    toast.success("Complaint submitted successfully!");
-    setFormData({ title: "", category: "", description: "", file: null });
-    setIsChecked(false);
-  };
 
   return (
     <Card className="max-w-lg mx-auto mt-6">
@@ -47,44 +65,19 @@ export default function ComplainForm() {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Title */}
+          {/* Subject */}
           <div>
-            <Label className="pb-3" htmlFor="title">
-              Title
+            <Label className="pb-3" htmlFor="subject">
+              Subject
             </Label>
             <Input
-              id="title"
-              name="title"
-              value={formData.title}
+              id="subject"
+              name="subject"
+              value={formData.subject}
               onChange={handleChange}
-              placeholder="Enter complaint title"
+              placeholder="Enter complaint subject"
               required
             />
-          </div>
-
-          {/* Categories */}
-          <div>
-            <Label className="pb-3">Category</Label>
-            <Select
-              onValueChange={(value) =>
-                setFormData((prev) => ({ ...prev, category: value }))
-              }
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="administration">Administration</SelectItem>
-                <SelectItem value="academic">Academic</SelectItem>
-                <SelectItem value="Departmental">Departmental</SelectItem>
-                <SelectItem value="transport">Transport</SelectItem>
-                <SelectItem value="library">Library</SelectItem>
-                <SelectItem value="hostel">Hostel</SelectItem>
-                <SelectItem value="infrastructure">Infrastructure</SelectItem>
-                <SelectItem value="canteen">Cafeteria</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
 
           {/* Description */}
@@ -100,19 +93,6 @@ export default function ComplainForm() {
               placeholder="Describe your issue"
               required
               className="h-20 resize-none overflow-y-auto w-full md:w-[462.4px]"
-            />
-          </div>
-
-          {/* File Upload */}
-          <div>
-            <Label htmlFor="file" className="pb-3">
-              Image/Video (Optional)
-            </Label>
-            <Input
-              id="file"
-              type="file"
-              accept="image/*,video/*"
-              onChange={handleFileChange}
             />
           </div>
 
@@ -132,10 +112,10 @@ export default function ComplainForm() {
           <Button
             type="submit"
             className="w-full"
-            disabled={!isChecked}
+            disabled={!isChecked || isLoading}
             title="Submit Complain"
           >
-            Submit
+            {isLoading ? "Submitting..." : "Submit"}
           </Button>
         </form>
       </CardContent>

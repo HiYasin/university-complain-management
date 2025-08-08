@@ -59,6 +59,9 @@ export function NavMain({ items, role }) {
                     </SidebarMenuButton>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-[600px]">
+                    <DialogHeader>
+                      <DialogTitle>{item.title}</DialogTitle>
+                    </DialogHeader>
                     <ComplainForm onSuccess={() => setIsDialogOpen(false)} />
                   </DialogContent>
                 </SidebarMenuItem>

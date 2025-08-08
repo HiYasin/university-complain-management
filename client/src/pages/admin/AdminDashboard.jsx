@@ -1,5 +1,5 @@
 import { ComplainSubject } from "@/components/ComplainSubject";
-import ComplaintTable from "@/components/ComplainTable";
+import ComplaintTable from "@/components/ComplaintTable";
 // import { ReportChart } from "@/components/ReportChart";
 
 export default function AdminDashboard() {

@@ -1,4 +1,4 @@
-import { Link } from "react-router"
+import { Link, NavLink, useNavigate } from "react-router"
 import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
@@ -6,38 +6,42 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu"
+import { ModeToggle } from "../ui/mode-toggle"
 
 export default function Header() {
+  const navigate = useNavigate();
+
   return (
-    <header className="w-full border-b px-6 py-4 sticky top-0 z-50 bg-black">
+    <header className="w-full border-b px-6 py-4 sticky top-0 z-50">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
-        <h1 className="text-xl font-semibold">UniComplaints</h1>
+        <Link to={'/'}><h1 className="text-xl font-semibold cursor-pointer">UniComplaints</h1></Link>
 
         <NavigationMenu>
           <NavigationMenuList className="gap-6">
             <NavigationMenuItem>
-              <NavigationMenuLink href="/" className="hover:underline">
+              <NavigationMenuLink onClick={() => navigate('/')}>
                 Home
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink href="/complaints" className="hover:underline">
-                Complaints
+              <NavigationMenuLink onClick={() => navigate('/dashboard')}>
+                Dashboard
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink href="/contact" className="hover:underline">
+              <NavigationMenuLink>
                 Contact
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 
-        <nav>
-        <Link to="/auth">
-          <Button variant="outline">Login / Sign Up</Button>
-        </Link>
-      </nav>
+        <nav className="flex items-center gap-1">
+          <ModeToggle />
+          <Link to="/auth">
+            <Button variant="outline">Login / Sign Up</Button>
+          </Link>
+        </nav>
       </div>
     </header>
   )

@@ -1,4 +1,6 @@
 import * as React from "react"
+import { useContext } from "react";
+import { AuthContext } from "@/providers/AuthProvider";
 import logo from "@/assets/iiuc-logo.png"
 import {
   LifeBuoy,
@@ -56,7 +58,17 @@ const userSidebarData = {
 
 export function AppSidebar({ role={role}, ...props
 }) {
-  const data = role === "admin" ? adminSidebarData : userSidebarData
+  const { user } = useContext(AuthContext);
+  const data = role === "admin" ? adminSidebarData : userSidebarData;
+  // Override sidebar user info with AuthProvider user if available
+  if (user) {
+    data.user = {
+      name: user.displayName || user.name || "User",
+      email: user.email,
+      avatar: user.photoURL || user.avatar || "/avatars/default.jpg",
+    };
+  }
+  
   return (
     <Sidebar variant="inset" {...props}>
       {/* Header Logo + App Name */}

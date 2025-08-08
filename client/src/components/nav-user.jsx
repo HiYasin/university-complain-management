@@ -1,9 +1,13 @@
+
+import { useContext } from "react";
+import { AuthContext } from "@/providers/AuthProvider";
+import { useNavigate } from "react-router";
 import {
   BadgeCheck,
   Bell,
   ChevronsUpDown,
   LogOut,
-} from "lucide-react"
+} from "lucide-react";
 
 import {
   Avatar,
@@ -30,7 +34,14 @@ import {
 export function NavUser({
   user
 }) {
-  const { isMobile } = useSidebar()
+  const { isMobile } = useSidebar();
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogOut = async () => {
+    await logout();
+    navigate("/");
+  };
 
   return (
     <SidebarMenu>
@@ -70,9 +81,9 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/')}>
                 <BadgeCheck />
-                Account
+                Home
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Bell />
@@ -81,8 +92,14 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <LogOut />
-              Log out
+              <button
+                className="flex items-center gap-2 w-full bg-transparent border-none p-0 m-0 text-inherit cursor-pointer"
+                onClick={handleLogOut}
+                type="button"
+              >
+                <LogOut />
+                Log out
+              </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router"
+
 import { AppSidebar } from "@/components/app-sidebar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -9,15 +9,17 @@ import {
 import { ModeToggle } from "@/components/ui/mode-toggle"
 import AdminDashboard from "@/pages/admin/AdminDashboard"
 import UserDashboard from "@/pages/user/UserDashboard"
+import { AuthContext } from "@/providers/AuthProvider"
+import { useContext } from "react"
+import { checkRole } from "@/lib/utils"
 
-export default function DashboardLayout({role = 'user'} ) {
- const location = useLocation()
-  const currentPath = location.pathname
+export default function DashboardLayout() {
+  const { user, loading } = useContext(AuthContext);
+  const role = checkRole(user);
 
-  const isAdmin = currentPath.startsWith("/admin")
-  const isUser = currentPath.startsWith("/user")
-
-
+  if (loading) {
+    return <div className="flex items-center justify-center h-screen">Loading...</div>;
+  }
 
   return (
     <SidebarProvider>
@@ -33,7 +35,7 @@ export default function DashboardLayout({role = 'user'} ) {
               className="mr-2 data-[orientation=vertical]:h-4"
             />
             <h1 className="text-lg font-semibold">
-              {isAdmin ? "Admin Dashboard" : "User Dashboard"}
+              {role === "admin" ? "Admin Dashboard" : "User Dashboard"}
             </h1>
           </div>
 
@@ -44,18 +46,10 @@ export default function DashboardLayout({role = 'user'} ) {
 
         {/* Main content */}
         <main className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          {isAdmin && (
-            <AdminDashboard>
-              <Outlet />
-            </AdminDashboard>
-          )}
-          {isUser && (
-            <UserDashboard>
-              <Outlet />
-            </UserDashboard>
-          )}
+          {role === "admin" && <AdminDashboard />}
+          {role === "user" && <UserDashboard />}
         </main>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

@@ -17,7 +17,7 @@ const AuthProvider = ({ children }) => {
             const signedInUser = result.user;
 
             if (!signedInUser.email.endsWith(allowedDomain)) {
-                alert('Access denied: Use your institutional email (iiuc.ac.bd)');
+                alert('Access denied: Use your institutional email (ugrad.iiuc.ac.bd)');
                 await signOut(auth);
                 return;
             }
