@@ -3,16 +3,24 @@ import Dashboard from "@/pages/Dashboard";
 import { createBrowserRouter } from "react-router"
 import PrivateRoute from "./PrivateRoute";
 import HomeLayout from "@/layouts/HomeLayout";
+import Home from "@/pages/Home";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <HomeLayout />,
+        children: [
+            {
+                path: "/",
+                element: <Home />,
+            },
+            {
+                path: "/auth",
+                element: <AuthPage />,
+            },
+        ]
     },
-    {
-        path: "/auth",
-        element: <AuthPage />,
-    },
+
     {
         path: "/dashboard",
         element: <PrivateRoute><Dashboard /></PrivateRoute>,
