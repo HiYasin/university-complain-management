@@ -1,18 +1,26 @@
 import AuthPage from "@/pages/AuthPage";
 import Dashboard from "@/pages/Dashboard";
-import Home from "@/pages/Home";
 import { createBrowserRouter } from "react-router"
 import PrivateRoute from "./PrivateRoute";
+import HomeLayout from "@/layouts/HomeLayout";
+import Home from "@/pages/Home";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Home />,
+        element: <HomeLayout />,
+        children: [
+            {
+                path: "/",
+                element: <Home />,
+            },
+            {
+                path: "/auth",
+                element: <AuthPage />,
+            },
+        ]
     },
-    {
-        path: "/auth",
-        element: <AuthPage />,
-    },
+
     {
         path: "/dashboard",
         element: <PrivateRoute><Dashboard /></PrivateRoute>,
