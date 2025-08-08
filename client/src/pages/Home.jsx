@@ -80,6 +80,24 @@ export default function Home() {
         </div>
       </section>
 
+      {/* How It Works */}
+      <section className="text-center">
+        <h2 className="text-3xl font-bold mb-8">How It Works</h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            { step: "1", title: "Login", desc: "Sign in using your IIUC GSuite account for secure access." },
+            { step: "2", title: "Submit Complaint", desc: "Fill out the complaint form and send directly to the authority." },
+            { step: "3", title: "Track & Get Feedback", desc: "Monitor status updates and receive official responses." },
+          ].map((item) => (
+            <div key={item.step} className="p-6 bg-muted rounded-lg shadow hover:shadow-md transition">
+              <div className="text-5xl font-bold text-primary mb-4">{item.step}</div>
+              <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+              <p className="text-muted-foreground">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       
     </div>
   )
