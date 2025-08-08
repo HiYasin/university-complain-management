@@ -1,10 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import {
-  errorHandler,
-  notFoundHandler,
-} from './middlewares/globalErrorHandler';
 import routes from './routes';
+import { unknownRouteHandler } from './middlewares/unknownRoute.handler';
+import { globalErrorHandler } from './middlewares/globalError.handler';
 
 const app = express();
 
@@ -26,9 +24,9 @@ app.get('/', (req, res) => {
 });
 
 // 404 Not Found handler (must be after all routes)
-app.use(notFoundHandler);
+app.use(unknownRouteHandler);
 
 // Global Error handler (must be last)
-app.use(errorHandler);
+app.use(globalErrorHandler);
 
 export default app;
