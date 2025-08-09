@@ -19,6 +19,13 @@ export default function AuthPageTabs() {
     setAuthLoading(false);
     navigate('/dashboard');
   };
+
+  const handleStudentLogin = async () => {
+    setAuthLoading(true);
+    await loginWithGoogle();
+    setAuthLoading(false);
+    navigate('/dashboard');
+  };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -40,7 +47,7 @@ export default function AuthPageTabs() {
               <Button onClick={logout} className={'w-full my-2'} variant="destructive">
                 Logout
               </Button>
-            ) : (<Button onClick={loginWithGoogle} className={'w-full my-2'}>Login with GSuite</Button>)
+            ) : (<Button onClick={handleStudentLogin} className={'w-full my-2'}>Login with GSuite</Button>)
           }
         </TabsContent>
 
