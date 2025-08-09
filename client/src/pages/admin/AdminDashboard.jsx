@@ -1,5 +1,6 @@
 
 import ComplaintTable from "@/components/ComplaintTable";
+import Spinner from "@/components/ui/spinner";
 import { useGetAllComplainsQuery } from "@/redux/features/complainApi";
 
 export default function AdminDashboard() {
@@ -14,7 +15,7 @@ export default function AdminDashboard() {
         {!isLoading && data?.data?.length > 0 ? (
           <ComplaintTable complaints={data.data} />
         ) : (
-          <div className="flex items-center justify-center h-screen">Loading...</div>
+          <div className="flex items-center justify-center h-screen"><Spinner /></div>
         )}
       </div>
     </div>

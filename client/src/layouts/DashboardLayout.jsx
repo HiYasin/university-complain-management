@@ -12,12 +12,13 @@ import UserDashboard from "@/pages/user/UserDashboard"
 import { AuthContext } from "@/providers/AuthProvider"
 import { useContext } from "react"
 import { checkRole } from "@/lib/utils"
+import Spinner from "@/components/ui/spinner"
 
 export default function DashboardLayout() {
   const { user, loading } = useContext(AuthContext);
   const role = checkRole(user?.email);
   if (loading) {
-    return <div className="flex items-center justify-center h-screen">Loading...</div>;
+    return <div className="flex items-center justify-center h-screen"><Spinner /></div>;
   }
 
   return (
