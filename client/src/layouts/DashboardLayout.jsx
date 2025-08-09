@@ -15,8 +15,7 @@ import { checkRole } from "@/lib/utils"
 
 export default function DashboardLayout() {
   const { user, loading } = useContext(AuthContext);
-  const role = checkRole(user);
-
+  const role = checkRole(user?.email);
   if (loading) {
     return <div className="flex items-center justify-center h-screen">Loading...</div>;
   }

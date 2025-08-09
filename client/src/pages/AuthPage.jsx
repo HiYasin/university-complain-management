@@ -5,9 +5,20 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { LoginAlert } from "@/components/authComponent/LoginAlert"
 import { AuthContext } from "@/providers/AuthProvider"
+import { useNavigate } from "react-router"
 
 export default function AuthPageTabs() {
-  const { user, loginWithGoogle, logout } = useContext(AuthContext);
+  const { user, loginWithGoogle, logout, signInWithEmail } = useContext(AuthContext);
+  const [authLoading, setAuthLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleAuthorityLogin = async (e) => {
+    e.preventDefault();
+    setAuthLoading(true);
+    await signInWithEmail(email, password);
+    setAuthLoading(false);
+    navigate('/dashboard');
+  };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -37,7 +48,7 @@ export default function AuthPageTabs() {
           <h2 className="text-2xl font-semibold my-3 text-center">
             Login as Authority
           </h2>
-          <>
+          <form onSubmit={handleAuthorityLogin} className="space-y-4">
             <div>
               <Label htmlFor="email" className={'pb-2'}>Email</Label>
               <Input
@@ -59,41 +70,12 @@ export default function AuthPageTabs() {
                 required
               />
             </div>
-            <Button type="submit" className="w-full">
-              Login
+            <Button type="submit" className="w-full" disabled={authLoading}>
+              {authLoading ? "Logging in..." : "Login"}
             </Button>
-          </>
+          </form>
         </TabsContent>
       </Tabs>
     </div>
   )
 }
-
-
-// import { Button } from '@/components/ui/button'
-
-
-// import { AuthContext } from '@/providers/AuthProvider';
-// import React, { useContext } from 'react'
-
-// export default function AuthPage() {
-//     const { user, loginWithGoogle, logout } = useContext(AuthContext);
-//     console.log(user);
-//     return (
-//         <div className="flex justify-center items-center w-full h-screen flex-col">
-//             {user ? (
-//                 <>
-//                     <div>Name: {user.displayName}</div>
-//                     <div>Email: {user.email}</div>
-//                     <div>User ID: {user.uid}</div>
-//                     <div>Photo URL: {user.photoURL}</div>
-//                     <Button onClick={logout}>Logout</Button>
-//                 </>
-//             ) : (
-//                 <Button onClick={loginWithGoogle}>Login with GSuite</Button>
-//             )}
-//         </div>
-
-//     )
-
-// }

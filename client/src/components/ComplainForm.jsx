@@ -2,13 +2,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -17,12 +10,13 @@ import { toast } from "sonner";
 
 import { useContext } from "react";
 import { AuthContext } from "@/providers/AuthProvider";
-import { getMatricIdFromEmail } from "@/lib/utils";
+import { checkRole, getMatricIdFromEmail } from "@/lib/utils";
 import { useCreateComplainMutation } from "@/redux/features/complainApi";
 
 export default function ComplainForm() {
   const { user } = useContext(AuthContext);
   const matricId = getMatricIdFromEmail(user?.email);
+  const role = checkRole(user?.email);
   const [createComplain, { isLoading }] = useCreateComplainMutation();
   const [formData, setFormData] = useState({
     subject: "",
@@ -38,8 +32,8 @@ export default function ComplainForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!matricId) {
-      toast.error("User not found. Please login.");
+    if (!matricId || role == "admin") {
+      toast.error("Login as Student");
       return;
     }
     try {

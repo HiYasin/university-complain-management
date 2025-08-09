@@ -7,9 +7,12 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu"
 import { ModeToggle } from "../ui/mode-toggle"
+import { useContext } from "react";
+import { AuthContext } from "@/providers/AuthProvider";
 
 export default function Header() {
   const navigate = useNavigate();
+  const { user, loading, logout } = useContext(AuthContext);
 
   return (
     <header className="w-full border-b px-6 py-4 sticky top-0 z-50">
@@ -39,7 +42,9 @@ export default function Header() {
         <nav className="flex items-center gap-1">
           <ModeToggle />
           <Link to="/auth">
-            <Button variant="outline">Login / Sign Up</Button>
+            {
+              user && !loading ? (<Button variant="outline" onClick={logout}>Logout</Button>) : (<Button variant="outline">Login / Sign Up</Button>)
+            }
           </Link>
         </nav>
       </div>
